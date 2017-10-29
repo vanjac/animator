@@ -219,8 +219,8 @@ class PropertiesFrame extends PApplet {
     
     addList = cp5.addScrollableList("add")
       .setCaptionLabel("Add Property")
-      .setPosition(6, 60)
-      .setSize(80, height)
+      .setPosition(2, 60)
+      .setSize(134, height)
       .setBarHeight(32)
       .setColorBackground(color(0, 90, 0))
       .addItems(disabledProperties)
