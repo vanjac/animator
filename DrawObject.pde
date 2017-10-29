@@ -93,21 +93,21 @@ abstract class SingleDrawObject extends DrawObject {
       String bm = blendMode.value;
       if(bm.equals("Add"))
         blendMode(ADD);
-      if(bm.equals("Subtract"))
+      else if(bm.equals("Subtract"))
         blendMode(SUBTRACT);
-      if(bm.equals("Darkest"))
+      else if(bm.equals("Darkest"))
         blendMode(DARKEST);
-      if(bm.equals("Lightest"))
+      else if(bm.equals("Lightest"))
         blendMode(LIGHTEST);
-      if(bm.equals("Difference"))
+      else if(bm.equals("Difference"))
         blendMode(DIFFERENCE);
-      if(bm.equals("Exclusion"))
+      else if(bm.equals("Exclusion"))
         blendMode(EXCLUSION);
-      if(bm.equals("Multiply"))
+      else if(bm.equals("Multiply"))
         blendMode(MULTIPLY);
-      if(bm.equals("Screen"))
+      else if(bm.equals("Screen"))
         blendMode(SCREEN);
-      if(bm.equals("Replace"))
+      else if(bm.equals("Replace"))
         blendMode(REPLACE);
     }
   }
@@ -181,19 +181,19 @@ class DrawText extends SingleDrawObject {
     String alignXValue = horizAlign.value;
     if(alignXValue.equals("Left"))
       alignX = LEFT;
-    if(alignXValue.equals("Center"))
+    else if(alignXValue.equals("Center"))
       alignX = CENTER;
-    if(alignXValue.equals("Right"))
+    else if(alignXValue.equals("Right"))
       alignX = RIGHT;
     int alignY = BASELINE;
     String alignYValue = vertAlign.value;
     if(alignYValue.equals("Top"))
       alignY = TOP;
-    if(alignYValue.equals("Center"))
+    else if(alignYValue.equals("Center"))
       alignY = CENTER;
-    if(alignYValue.equals("Baseline"))
+    else if(alignYValue.equals("Baseline"))
       alignY = BASELINE;
-    if(alignYValue.equals("Bottom"))
+    else if(alignYValue.equals("Bottom"))
       alignY = BOTTOM;
     textAlign(alignX, alignY);
     
