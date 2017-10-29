@@ -212,7 +212,7 @@ class DrawText extends SingleDrawObject {
 abstract class DrawShape extends SingleDrawObject {
   ColorPropertyGroup fillColor, strokeColor;
   Property strokeWeight;
-  StringProperty strokeJoin;
+  StringProperty strokeJoin, strokeCap;
   
   DrawShape(String name) {
     super(name);
@@ -221,11 +221,13 @@ abstract class DrawShape extends SingleDrawObject {
     strokeColor = new ColorPropertyGroup(color(0), "Border Color", "Border Transparency", false, false);
     strokeWeight = new Property("Border Size", 0, 0.5, false);
     strokeJoin = new StringProperty("Border Join", "Miter", "Miter,Bevel,Round", false);
+    strokeCap = new StringProperty("Border Cap", "Round", "Square,Project,Round", false);
     
     fillColor.addProperties(properties);
     properties.add(strokeWeight);
     strokeColor.addProperties(properties);
     stringProperties.add(strokeJoin);
+    stringProperties.add(strokeCap);
   }
   
   void draw(PGraphics g, int time) {
@@ -246,12 +248,21 @@ abstract class DrawShape extends SingleDrawObject {
       else if(sjValue.equals("Round"))
         strokeJoin(ROUND);
     }
+    if(strokeCap.enabled) {
+      if(strokeCap.value.equals("Square"))
+        strokeCap(SQUARE);
+      else if(strokeCap.value.equals("Project"))
+        strokeCap(PROJECT);
+      else if(strokeCap.value.equals("Round"))
+        strokeCap(ROUND);
+    }
   }
   
   void postDraw(PGraphics g) {
     strokeWeight(1);
     stroke(0);
     strokeJoin(MITER);
+    strokeCap(ROUND);
     super.postDraw(g);
   }
 }
@@ -262,6 +273,7 @@ class DrawRectangle extends DrawShape {
   
   DrawRectangle(String name) {
     super(name);
+    stringProperties.remove(strokeCap);
     width = new Property("Width", 50, 1);
     height = new Property("Height", 50, 1);
     horizAlign = new StringProperty("Align H", "Center", "Left,Center,Right", false);
@@ -301,6 +313,7 @@ class DrawEllipse extends DrawShape {
   DrawEllipse(String name) {
     super(name);
     stringProperties.remove(strokeJoin); // no impact on drawing
+    stringProperties.remove(strokeCap);
     width = new Property("Width", 50, 1);
     height = new Property("Height", 50, 1);
     horizAlign = new StringProperty("Align H", "Center", "Left,Center,Right", false);
@@ -336,7 +349,7 @@ class DrawEllipse extends DrawShape {
 class DrawArc extends DrawShape {
   Property width, height, startAngle, stopAngle;
   StringProperty horizAlign, vertAlign;
-  StringProperty arcMode, strokeCap;
+  StringProperty arcMode;
   
   DrawArc(String name) {
     super(name);
@@ -347,7 +360,6 @@ class DrawArc extends DrawShape {
     horizAlign = new StringProperty("Align H", "Center", "Left,Center,Right", false);
     vertAlign = new StringProperty("Align V", "Center", "Top,Center,Bottom", false);
     arcMode = new StringProperty("Arc Fill Mode", "Open Pie", "Pie,Open,Open Pie,Chord", false);
-    strokeCap = new StringProperty("Border Cap", "Round", "Square,Project,Round", false);
     properties.add(width);
     properties.add(height);
     properties.add(startAngle);
@@ -355,7 +367,6 @@ class DrawArc extends DrawShape {
     stringProperties.add(horizAlign);
     stringProperties.add(vertAlign);
     stringProperties.add(arcMode);
-    stringProperties.add(strokeCap);
   }
   
   void draw(PGraphics g, int time) {
@@ -375,14 +386,6 @@ class DrawArc extends DrawShape {
         y = h/2;
       else if(vertAlign.value.equals("Bottom"))
         y = -h/2;
-    }
-    if(strokeCap.enabled) {
-      if(strokeCap.value.equals("Square"))
-        strokeCap(SQUARE);
-      else if(strokeCap.value.equals("Project"))
-        strokeCap(PROJECT);
-      else if(strokeCap.value.equals("Round"))
-        strokeCap(ROUND);
     }
     boolean specialMode = false;
     int mode = 0;
@@ -409,7 +412,6 @@ class DrawArc extends DrawShape {
   }
   
   void postDraw(PGraphics g) {
-    strokeCap(ROUND);
     super.postDraw(g);
   }
 }
