@@ -300,6 +300,7 @@ class DrawEllipse extends DrawShape {
   
   DrawEllipse(String name) {
     super(name);
+    stringProperties.remove(strokeJoin); // no impact on drawing
     width = new Property("Width", 50, 1);
     height = new Property("Height", 50, 1);
     horizAlign = new StringProperty("Align H", "Center", "Left,Center,Right", false);
@@ -329,5 +330,86 @@ class DrawEllipse extends DrawShape {
         y = -h/2;
     }
     ellipse(x, y, w, h);
+  }
+}
+
+class DrawArc extends DrawShape {
+  Property width, height, startAngle, stopAngle;
+  StringProperty horizAlign, vertAlign;
+  StringProperty arcMode, strokeCap;
+  
+  DrawArc(String name) {
+    super(name);
+    width = new Property("Width", 50, 1);
+    height = new Property("Height", 50, 1);
+    startAngle = new Property("Start angle", 0, 5);
+    stopAngle = new Property("Stop angle", 90, 5);
+    horizAlign = new StringProperty("Align H", "Center", "Left,Center,Right", false);
+    vertAlign = new StringProperty("Align V", "Center", "Top,Center,Bottom", false);
+    arcMode = new StringProperty("Arc Fill Mode", "Open Pie", "Pie,Open,Open Pie,Chord", false);
+    strokeCap = new StringProperty("Border Cap", "Round", "Square,Project,Round", false);
+    properties.add(width);
+    properties.add(height);
+    properties.add(startAngle);
+    properties.add(stopAngle);
+    stringProperties.add(horizAlign);
+    stringProperties.add(vertAlign);
+    stringProperties.add(arcMode);
+    stringProperties.add(strokeCap);
+  }
+  
+  void draw(PGraphics g, int time) {
+    super.draw(g, time);
+    float w = width.valueAtTime(time);
+    float h = height.valueAtTime(time);
+    float x = 0;
+    float y = 0;
+    if(horizAlign.enabled) {
+      if(horizAlign.value.equals("Left"))
+        x = w/2;
+      else if(horizAlign.value.equals("Right"))
+        x = -w/2;
+    }
+    if(vertAlign.enabled) {
+      if(vertAlign.value.equals("Top"))
+        y = h/2;
+      else if(vertAlign.value.equals("Bottom"))
+        y = -h/2;
+    }
+    if(strokeCap.enabled) {
+      if(strokeCap.value.equals("Square"))
+        strokeCap(SQUARE);
+      else if(strokeCap.value.equals("Project"))
+        strokeCap(PROJECT);
+      else if(strokeCap.value.equals("Round"))
+        strokeCap(ROUND);
+    }
+    boolean specialMode = false;
+    int mode = 0;
+    if(arcMode.enabled) {
+      if(arcMode.value.equals("Pie")) {
+        specialMode = true;
+        mode = PIE;
+      } else if(arcMode.value.equals("Open")) {
+        specialMode = true;
+        mode = OPEN;
+      } else if(arcMode.value.equals("Chord")) {
+        specialMode = true;
+        mode = CHORD;
+      }
+    }
+    if(specialMode)
+      arc(x, y, w, h,
+          radians(startAngle.valueAtTime(time)),
+          radians(stopAngle.valueAtTime(time)), mode);
+    else
+      arc(x, y, w, h,
+          radians(startAngle.valueAtTime(time)),
+          radians(stopAngle.valueAtTime(time)));
+  }
+  
+  void postDraw(PGraphics g) {
+    strokeCap(ROUND);
+    super.postDraw(g);
   }
 }

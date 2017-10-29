@@ -62,6 +62,7 @@ public class ObjectFrame extends PApplet {
     addDrawObjectFactory(new DrawTextFactory());
     addDrawObjectFactory(new DrawRectangleFactory());
     addDrawObjectFactory(new DrawEllipseFactory());
+    addDrawObjectFactory(new DrawArcFactory());
     addDrawObjectFactory(new DrawBackgroundFactory());
   }
   

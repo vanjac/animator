@@ -95,3 +95,19 @@ class DrawEllipseFactory implements DrawObjectFactory {
     return new DrawEllipse("Ellipse " + (++count));
   }
 }
+
+class DrawArcFactory implements DrawObjectFactory {
+  int count = 0;
+  
+  String getName() {
+    return "Arc";
+  }
+  
+  boolean requireFile() {
+    return false;
+  }
+  
+  DrawObject create(File f) {
+    return new DrawArc("Arc " + (++count));
+  }
+}
