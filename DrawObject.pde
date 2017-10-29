@@ -252,19 +252,38 @@ abstract class DrawShape extends SingleDrawObject {
 
 class DrawRectangle extends DrawShape {
   Property width, height;
+  StringProperty horizAlign, vertAlign;
   
   DrawRectangle(String name) {
     super(name);
     width = new Property("Width", 50, 1);
     height = new Property("Height", 50, 1);
+    horizAlign = new StringProperty("Align H", "Center", "Left,Center,Right", false);
+    vertAlign = new StringProperty("Align V", "Center", "Top,Center,Bottom", false);
     properties.add(width);
     properties.add(height);
+    stringProperties.add(horizAlign);
+    stringProperties.add(vertAlign);
   }
   
   void draw(PGraphics g, int time) {
     super.draw(g, time);
     float w = width.valueAtTime(time);
     float h = height.valueAtTime(time);
-    rect(-w/2, -h/2, w, h);
+    float x = -w/2;
+    float y = -h/2;
+    if(horizAlign.enabled) {
+      if(horizAlign.value.equals("Left"))
+        x = 0;
+      else if(horizAlign.value.equals("Right"))
+        x = -w;
+    }
+    if(vertAlign.enabled) {
+      if(vertAlign.value.equals("Top"))
+        y = 0;
+      else if(vertAlign.value.equals("Bottom"))
+        y = -h;
+    }
+    rect(x, y, w, h);
   }
 }
