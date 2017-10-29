@@ -161,6 +161,7 @@ class DrawImage extends SingleDrawObject {
 }
 
 class DrawText extends SingleDrawObject {
+  Property leading;
   ColorPropertyGroup textColor;
   StringProperty horizAlign, vertAlign;
   
@@ -168,8 +169,10 @@ class DrawText extends SingleDrawObject {
     super("Text");
     textColor = new ColorPropertyGroup(color(0), "Color", "Transparency", true, false);
     textColor.addProperties(properties);
+    leading = new Property("Leading", 19, 1, false);
     horizAlign = new StringProperty("Align H", "Center", "Left,Center,Right", false);
     vertAlign = new StringProperty("Align V", "Baseline", "Top,Center,Baseline,Bottom", false);
+    properties.add(leading);
     stringProperties.add(horizAlign);
     stringProperties.add(vertAlign);
   }
@@ -198,6 +201,9 @@ class DrawText extends SingleDrawObject {
     textAlign(alignX, alignY);
     
     fill(textColor.colorAtTime(time));
+    textSize(12);
+    if(leading.enabled)
+      textLeading(leading.valueAtTime(time));
     text(name.replace("\\n", "\n"), 0, 0);
     textAlign(LEFT, BASELINE);
   }
