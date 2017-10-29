@@ -198,7 +198,7 @@ class DrawText extends SingleDrawObject {
     textAlign(alignX, alignY);
     
     fill(textColor.colorAtTime(time));
-    text(name, 0, 0);
+    text(name.replace("\\n", "\n"), 0, 0);
     textAlign(LEFT, BASELINE);
   }
 }
