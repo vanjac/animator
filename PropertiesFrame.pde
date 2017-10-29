@@ -1,6 +1,6 @@
 class PropertiesFrame extends PApplet {
 
-  Animator parent;
+  animator parent;
   ControlP5 cp5;
   
   DrawObject selected = null;
@@ -11,7 +11,7 @@ class PropertiesFrame extends PApplet {
   boolean updateControls = false;
   boolean fixAddList = false;
 
-  PropertiesFrame(Animator parent) {
+  PropertiesFrame(animator parent) {
     super();   
     this.parent = parent;
     selectedControllers = new ArrayList<Controller>();

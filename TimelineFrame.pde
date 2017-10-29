@@ -1,8 +1,8 @@
 class TimelineFrame extends PApplet {
 
-  Animator parent;
+  animator parent;
   
-  TimelineFrame(Animator parent) {
+  TimelineFrame(animator parent) {
     super();   
     this.parent = parent;
     PApplet.runSketch(new String[]{this.getClass().getName()}, this);

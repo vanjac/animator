@@ -9,7 +9,7 @@ public class ObjectFrame extends PApplet {
     }
   }
   
-  Animator parent;
+  animator parent;
   ControlP5 cp5;
   
   ScrollableList objectList;
@@ -22,7 +22,7 @@ public class ObjectFrame extends PApplet {
   boolean updateList = false;
   boolean fixAddList = false;
   
-  ObjectFrame(Animator parent) {
+  ObjectFrame(animator parent) {
     super();   
     this.parent = parent;
     PApplet.runSketch(new String[]{this.getClass().getName()}, this);
