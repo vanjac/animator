@@ -79,3 +79,19 @@ class DrawRectangleFactory implements DrawObjectFactory {
     return new DrawRectangle("Rectangle " + (++count));
   }
 }
+
+class DrawEllipseFactory implements DrawObjectFactory {
+  int count = 0;
+  
+  String getName() {
+    return "Ellipse";
+  }
+  
+  boolean requireFile() {
+    return false;
+  }
+  
+  DrawObject create(File f) {
+    return new DrawEllipse("Ellipse " + (++count));
+  }
+}

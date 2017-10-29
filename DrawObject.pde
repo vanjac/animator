@@ -287,3 +287,41 @@ class DrawRectangle extends DrawShape {
     rect(x, y, w, h);
   }
 }
+
+class DrawEllipse extends DrawShape {
+  Property width, height;
+  StringProperty horizAlign, vertAlign;
+  
+  DrawEllipse(String name) {
+    super(name);
+    width = new Property("Width", 50, 1);
+    height = new Property("Height", 50, 1);
+    horizAlign = new StringProperty("Align H", "Center", "Left,Center,Right", false);
+    vertAlign = new StringProperty("Align V", "Center", "Top,Center,Bottom", false);
+    properties.add(width);
+    properties.add(height);
+    stringProperties.add(horizAlign);
+    stringProperties.add(vertAlign);
+  }
+  
+  void draw(PGraphics g, int time) {
+    super.draw(g, time);
+    float w = width.valueAtTime(time);
+    float h = height.valueAtTime(time);
+    float x = 0;
+    float y = 0;
+    if(horizAlign.enabled) {
+      if(horizAlign.value.equals("Left"))
+        x = w/2;
+      else if(horizAlign.value.equals("Right"))
+        x = -w/2;
+    }
+    if(vertAlign.enabled) {
+      if(vertAlign.value.equals("Top"))
+        y = h/2;
+      else if(vertAlign.value.equals("Bottom"))
+        y = -h/2;
+    }
+    ellipse(x, y, w, h);
+  }
+}
