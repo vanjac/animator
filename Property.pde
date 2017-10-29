@@ -183,7 +183,7 @@ class ColorPropertyGroup {
     r = new Property(rgbPrefix + " R", red(defaultColor) / 255.0, 0.01, rgbEnabled);
     g = new Property(rgbPrefix + " G", green(defaultColor) / 255.0, 0.01, rgbEnabled);
     b = new Property(rgbPrefix + " B", blue(defaultColor) / 255.0, 0.01, rgbEnabled);
-    a = new Property(aName, alpha(defaultColor) / 255.0, 0.01, aEnabled);
+    a = new Property(aName, 1 - alpha(defaultColor) / 255.0, 0.01, aEnabled);
   }
   
   void addProperties(List<Property> properties) {
@@ -204,9 +204,12 @@ class ColorPropertyGroup {
   }
   
   color colorAtTime(int time) {
+    float aVal = a.valueAtTime(time);
+    if(aVal > 1)
+      aVal = 1;
     return color(r.valueAtTime(time)*255,
       g.valueAtTime(time)*255,
       b.valueAtTime(time)*255,
-      a.valueAtTime(time)*255);
+      (1-aVal)*255);
   }
 }
